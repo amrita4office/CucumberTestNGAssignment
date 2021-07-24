@@ -2,6 +2,8 @@ package StepDef;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +16,9 @@ import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class StepDef {
+	Random ran = new Random();
+	Integer int1 = ran.nextInt(1000);
+	
 	WebDriver driver;
 		@Given("Open the required URL")
 		public void open_the_required_url() {
@@ -28,22 +33,27 @@ public class StepDef {
 			    Thread.sleep(5000);
 			}
 		
-		@When("Fill in the User Details in registration screen as {string},{string},{string},{string},{string}")
-			public void fill_in_the_user_details_in_registration_screen_as(String fName, String lName, String eMail, String uName, String Pwd) throws InterruptedException {
-				driver.findElement(By.id(("registration_firstname"))).sendKeys(fName);
+		@When("Fill in the User Details in registration screen as {string},{string},{string},{string}")
+			public void fill_in_the_user_details_in_registration_screen_as(String fName, String lName, String eMail, String Pwd) throws InterruptedException {
+				String FirstName = fName+int1;
+				String Email = FirstName+eMail;
+				String UserName = FirstName+lName;
+				driver.findElement(By.id(("registration_firstname"))).sendKeys(FirstName);
 			    driver.findElement(By.id(("registration_lastname"))).sendKeys(lName);
-			    driver.findElement(By.id(("registration_email"))).sendKeys(eMail);
-			    driver.findElement(By.id(("username"))).sendKeys(uName);
+			    driver.findElement(By.id(("registration_email"))).sendKeys(Email);
+			    driver.findElement(By.id(("username"))).sendKeys(UserName);
 			    driver.findElement(By.id(("pass1"))).sendKeys(Pwd);
 			    driver.findElement(By.id(("pass2"))).sendKeys(Pwd);
 			    driver.findElement(By.id(("registration_submit"))).click();
 			    Thread.sleep(5000);
 			}
 		
-		@Then("Validate the registration {string} and {string}")
-		public void validate_the_registration_and(String regMsg, String regEmail) throws InterruptedException {
+		@Then("Validate the registration {string},{string},{string}")
+		public void validate_the_registration_and(String fName, String lName, String eMail) throws InterruptedException {
+			 String FirstName = fName+int1;
+			 String Email = FirstName+eMail;
 			 String Actual = driver.findElement(By.xpath("//*[@class='col-xs-12 col-md-12']/p[1]")).getText();
-			 String Expected  = regMsg;
+			 String Expected  = "Dear "+FirstName+" "+lName;  // "Dear U62 test"
 			 Integer len = Expected.length();
 			 String a1 = Actual.substring(0,len);
 			 Assert.assertEquals(a1, Expected);
@@ -52,7 +62,7 @@ public class StepDef {
 			 driver.findElement(By.xpath("//*[@class='dropdown avatar-user']")).click();
 			 Thread.sleep(3000);
 			 String ActualEmail = driver.findElement(By.xpath("//*[@class='user-header']/div/p")).getText();
-			 String ExpEmail = regEmail;
+			 String ExpEmail = Email;
 			 Assert.assertEquals(ActualEmail, ExpEmail);
 			 System.out.println("The Email verification Passed");
 			 //compose email
@@ -77,11 +87,11 @@ public class StepDef {
 			 driver.findElement(By.xpath("//*[@id='compose_message_compose']")).click();
 			 Thread.sleep(5000);
 			 if(driver.findElement(By.xpath("//*[@class='alert alert-success']")).isDisplayed())
-			 System.out.println("Element is Visible");
+			 System.out.println("Email notification is Visible");
 			 else
-			 System.out.println("Element is not Visible");
+			 System.out.println("Email notification is not Visible");
 			
-			driver.quit();
+			 driver.quit();
 			 
 			}
 
