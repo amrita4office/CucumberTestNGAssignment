@@ -7,6 +7,7 @@ import java.util.Random;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 
@@ -18,6 +19,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class StepDef {
 	Random ran = new Random();
 	Integer int1 = ran.nextInt(1000);
+	By SignUp = By.xpath("//a[text()=' Sign up! ']");
 	
 	WebDriver driver;
 		@Given("Open the required URL")
@@ -29,7 +31,8 @@ public class StepDef {
 
 		@When("Click on the SignUP link")
 			public void click_on_the_sign_up_link() throws InterruptedException {
-			    driver.findElement(By.xpath("//a[text()=' Sign up! ']")).click();
+			   // driver.findElement(By.xpath("//a[text()=' Sign up! ']")).click();
+			    driver.findElement(SignUp).click();
 			    Thread.sleep(5000);
 			}
 		
@@ -81,17 +84,21 @@ public class StepDef {
 			//press tab here
 			// driver.findElement(By.xpath("//*[@id='compose_message_title']")).sendKeys(Keys.TAB);
 			 Thread.sleep(3000);
-			 //driver.findElement(By.xpath("//*[@id='cke_1_contents']")).click();
-			 //driver.findElement(By.xpath("//*[@id='cke_1_contents']")).sendKeys("Testing Email body");
-			
+			 //iframe selction object
+			 WebElement ifrm = driver.findElement(By.xpath("//*[@class='cke_wysiwyg_frame cke_reset']"));
+			 driver.switchTo().frame(0);
+			 driver.findElement(By.xpath("//body")).click();
+			 driver.findElement(By.xpath("//body")).sendKeys("test");
+			 driver.switchTo().defaultContent();
+			 Thread.sleep(5000);
 			 driver.findElement(By.xpath("//*[@id='compose_message_compose']")).click();
 			 Thread.sleep(5000);
-			 if(driver.findElement(By.xpath("//*[@class='alert alert-success']")).isDisplayed())
-			 System.out.println("Email notification is Visible");
-			 else
-			 System.out.println("Email notification is not Visible");
-			
-			 driver.quit();
+				if(driver.findElement(By.xpath("//*[@class='alert alert-success']")).isDisplayed())
+				System.out.println("Email notification is Visible");
+				else
+				System.out.println("Email notification is not Visible");
+				
+			driver.quit();
 			 
 			}
 

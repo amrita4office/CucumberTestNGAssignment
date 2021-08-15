@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="68.739">
+<testcase classname="To validate User Registration" name="To validate registration of a user" time="68.288">
+<system-out><![CDATA[Given Open the required URL.................................................passed
+When Click on the SignUP link...............................................passed
+And Fill in the User Details in registration screen as "U","test","@test.com","pwd1".passed
+Then Validate the registration "U","test","@test.com".......................passed
+]]></system-out>
+</testcase>
+</testsuite>
