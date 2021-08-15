@@ -33,7 +33,7 @@ public class StepDef {
 			public void click_on_the_sign_up_link() throws InterruptedException {
 			   // driver.findElement(By.xpath("//a[text()=' Sign up! ']")).click();
 			    driver.findElement(SignUp).click();
-			    Thread.sleep(5000);
+			    Thread.sleep(5000); 
 			}
 		
 		@When("Fill in the User Details in registration screen as {string},{string},{string},{string}")
