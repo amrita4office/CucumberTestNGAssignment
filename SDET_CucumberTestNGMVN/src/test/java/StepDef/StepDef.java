@@ -28,7 +28,7 @@ public class StepDef {
 			driver = new ChromeDriver();
 		    driver.get("http://elearningm1.upskills.in/");
 			}
-
+ 
 		@When("Click on the SignUP link")
 			public void click_on_the_sign_up_link() throws InterruptedException {
 			   // driver.findElement(By.xpath("//a[text()=' Sign up! ']")).click();
